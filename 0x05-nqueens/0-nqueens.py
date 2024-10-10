@@ -1,6 +1,8 @@
 #!/usr/bin/python3
-import sys
 """N-Queens"""
+
+
+import sys
 
 
 def IsSafe(board, row, col, N):
