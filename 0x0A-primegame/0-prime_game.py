@@ -1,43 +1,42 @@
 #!/usr/bin/python3
-
-"""Prime Game"""
+"""0. Prime Game - Maria and Ben are playing a game"""
 
 
 def isWinner(x, nums):
-    """Prime Game"""
-    if x.isinstance(int) or x < 1:
+    """x - rounds
+    nums - numbers list
+    """
+    if x <= 0 or nums is None:
+        return None
+    if x != len(nums):
         return None
 
-    if not nums or type(nums) is not list or nums == []:
-        return None
+    ben = 0
+    maria = 0
 
-    def is_prime(number):
-        """Check if a number is prime"""
-        if number <= 1:
-            return False
-        for n in range(2, int(number ** 0.5) + 1):
-            if number % n == 0:
-                return False
-        return True
+    a = [1 for x in range(sorted(nums)[-1] + 1)]
+    a[0], a[1] = 0, 0
+    for i in range(2, len(a)):
+        rm_multiples(a, i)
 
-    def play_game(max_n):
-        """Play a round of the prime game and return the winner"""
-        numbers = [n for n in range(1, max_n + 1) if is_prime(n)]
-        turn = True
-        for n in numbers:
-            turn = not turn
-            for j in numbers:
-                if j and j % n == 0:
-                    numbers[numbers.index(j)] = None
+    for i in nums:
+        if sum(a[0:i + 1]) % 2 == 0:
+            ben += 1
+        else:
+            maria += 1
+    if ben > maria:
+        return "Ben"
+    if maria > ben:
+        return "Maria"
+    return None
 
-        return int(turn)
 
-    wins = [0, 0]
-    for max_n in nums:
-        wineer = play_game(max_n)
-        wins[wineer] += 1
-
-    if wins[0] == wins[1]:
-        return None
-    else:
-        return ['Maria', 'Ben'][wins.index(max(wins))]
+def rm_multiples(ls, x):
+    """removes multiple
+    of primes
+    """
+    for i in range(2, len(ls)):
+        try:
+            ls[i * x] = 0
+        except (ValueError, IndexError):
+            break
