@@ -30,4 +30,3 @@ def countOnes(n):
     while n & (1 << (7 - counter)):
         counter += 1
     return counter
-
